@@ -17,12 +17,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".ContadorService" android:enabled="true" android:exported="true">
-            <intent-filter>
-                <action android:name="CONTADOR_SERVICE" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </service>
+        <service android:name=".ContadorService" android:enabled="true" android:exported="true" />
     </application>
 
 </manifest>
