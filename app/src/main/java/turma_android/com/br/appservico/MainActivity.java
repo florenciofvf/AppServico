@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void desvincularServico(View view) {
         unbindService(serviceConnection);
+        contador = null;
     }
 
     private class THREAD extends Thread {
