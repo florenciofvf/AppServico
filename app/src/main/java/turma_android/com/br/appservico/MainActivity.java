@@ -37,28 +37,23 @@ public class MainActivity extends AppCompatActivity {
 
     public void vincularServico(View view) {
         Intent it = new Intent(this, ContadorService.class);
-        bindService(it, serviceConnection,
-                                Service.BIND_AUTO_CREATE);
+        bindService(it, serviceConnection, Service.BIND_AUTO_CREATE);
     }
 
     private Conexao serviceConnection = new Conexao();
 
-    private class Conexao implements ServiceConnection {
-
+    public class Conexao implements ServiceConnection {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-            ContadorService.ContadorBinder binder =
-                    (ContadorService.ContadorBinder) iBinder;
-
+            ContadorService.ContadorBinder binder = (ContadorService.ContadorBinder) iBinder;
             contador = binder.getContador();
         }
 
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
-            Log.i("TESTE", componentName.toString());
             contador = null;
         }
-    }
+    };
 
     public void desvincularServico(View view) {
         unbindService(serviceConnection);
@@ -78,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(300);
                 } catch(Exception e) {}
             }
         }
