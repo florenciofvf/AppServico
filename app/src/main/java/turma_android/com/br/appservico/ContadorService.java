@@ -2,10 +2,12 @@ package turma_android.com.br.appservico;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Binder;
 import android.os.IBinder;
+import android.support.annotation.IntDef;
 import android.util.Log;
 
-public class ContadorService extends Service {
+public class ContadorService extends Service implements Contador {
     private ContadorThread thread;
 
     @Override
@@ -14,6 +16,11 @@ public class ContadorService extends Service {
 
         thread = new ContadorThread();
         thread.start();
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
@@ -29,7 +36,28 @@ public class ContadorService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return new ContadorBinder(this);
+    }
+
+    public class ContadorBinder extends Binder {
+        private Contador contador;
+
+        public ContadorBinder(Contador contador) {
+            this.contador = contador;
+        }
+
+        public Contador getContador() {
+            return contador;
+        }
+    }
+
+    @Override
+    public int getValor() {
+        if(thread != null) {
+            return thread.contador;
+        }
+
+        return 0;
     }
 
     private class ContadorThread extends Thread {
